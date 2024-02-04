@@ -1,3 +1,10 @@
+Introduction to Semcms
+SEMCMS is a foreign trade website content management system (CMS) that supports multiple languages.
+```
+v4.8 Download Link: http://www.sem-cms.com/TradeCmsdown/php/semcms_php_4.8.zip
+```
+
+
 Causes of vulnerabilities:
 
 /xcR45q_Admin/SEMCMS_Menu.php Line 66
